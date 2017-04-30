@@ -97,7 +97,7 @@ ggplot(data = activity_imputed, aes(date, steps)) +
   ylab("Total Steps") +  
   scale_y_continuous(expand = c(0, 0))
 ```
-### Mean and median total number of steps taken per day
+### Mean and median total number of steps taken per day after missing values are imputed
 ```{r mean and median number of steps per day after imputting na values}
 activity_imputed_summary <- activity_imputed %>% 
   group_by(date) %>% 
