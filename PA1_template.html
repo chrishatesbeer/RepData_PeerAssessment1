@@ -128,7 +128,25 @@ $(document).ready(function () {
 <h2>Loading and preprocessing the data</h2>
 <p>Read the data into a variable called activity using read.csv.</p>
 <pre class="r"><code>activity &lt;- read.csv(&quot;activity.csv&quot;)
-activity$date &lt;- as.Date(activity$date, &quot;%Y-%m-%d&quot;)</code></pre>
+activity$date &lt;- as.Date(activity$date, &quot;%Y-%m-%d&quot;)
+head(activity)</code></pre>
+<pre><code>##   steps       date interval
+## 1    NA 2012-10-01        0
+## 2    NA 2012-10-01        5
+## 3    NA 2012-10-01       10
+## 4    NA 2012-10-01       15
+## 5    NA 2012-10-01       20
+## 6    NA 2012-10-01       25</code></pre>
+<pre class="r"><code>summary(activity)</code></pre>
+<pre><code>##      steps             date               interval     
+##  Min.   :  0.00   Min.   :2012-10-01   Min.   :   0.0  
+##  1st Qu.:  0.00   1st Qu.:2012-10-16   1st Qu.: 588.8  
+##  Median :  0.00   Median :2012-10-31   Median :1177.5  
+##  Mean   : 37.38   Mean   :2012-10-31   Mean   :1177.5  
+##  3rd Qu.: 12.00   3rd Qu.:2012-11-15   3rd Qu.:1766.2  
+##  Max.   :806.00   Max.   :2012-11-30   Max.   :2355.0  
+##  NA's   :2304</code></pre>
+<p>Note the large number of NA in the steps column</p>
 </div>
 <div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level2">
 <h2>What is mean total number of steps taken per day?</h2>
@@ -239,7 +257,7 @@ format(max_interval)</code></pre>
 <div id="imputing-missing-values" class="section level2">
 <h2>Imputing missing values</h2>
 <p>The NA value will be replaced with the average of the interval</p>
-<pre class="r"><code>totalna &lt;- sum( !is.na( activity$steps ) ) 
+<pre class="r"><code>totalna &lt;- sum( is.na( activity$steps ) ) 
 
 impute.mean &lt;- function(x) {
   replace(x, is.na(x), mean(x, na.rm = TRUE))
@@ -259,7 +277,7 @@ summary(activity_imputed)</code></pre>
 ##  Mean   : 37.38   Mean   :2012-10-31   Mean   :1177.5  
 ##  3rd Qu.: 27.00   3rd Qu.:2012-11-15   3rd Qu.:1766.2  
 ##  Max.   :806.00   Max.   :2012-11-30   Max.   :2355.0</code></pre>
-<p>There were 15264 values replaced with the mean for that period</p>
+<p>There were 2304 values replaced with the mean for that period</p>
 <div id="histogram-of-the-total-number-of-steps-taken-each-day-after-missing-values-are-imputed" class="section level3">
 <h3>Histogram of the total number of steps taken each day after missing values are imputed</h3>
 <pre class="r"><code>ggplot(data = activity_imputed, aes(date, steps)) +

@@ -18,7 +18,11 @@ Read the data into a variable called activity using read.csv.
 ```{r preprocess}
 activity <- read.csv("activity.csv")
 activity$date <- as.Date(activity$date, "%Y-%m-%d")
+head(activity)
+summary(activity)
 ```
+Note the large number of NA in the steps column
+
 ## What is mean total number of steps taken per day?
 A histogram using ggplot2 of the total number of steps recorded for each day.  The warning is due to the NAs in he data which is addressed below.
 ```{r histogram steps per day, fig.width=10,fig.height=5}
@@ -67,7 +71,7 @@ The interval with the highest mean is `r max_interval$interval` with an average 
 The NA value will be replaced with the average of the interval
 ```{r imputing missing data}
 
-totalna <- sum( !is.na( activity$steps ) ) 
+totalna <- sum( is.na( activity$steps ) ) 
 
 impute.mean <- function(x) {
   replace(x, is.na(x), mean(x, na.rm = TRUE))
